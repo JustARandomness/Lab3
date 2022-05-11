@@ -20,11 +20,13 @@ class RectangleMatrix {
         }
 
         RectangleMatrix(int linesCount, int columnsCount) {
+            T item;
+            item = 0;
             this->lines = linesCount;
             this->columns = columnsCount;
             this->rectangleMatrix = new DynamicArray<T>(linesCount * columnsCount);
             for (int i = 0; i < linesCount * columnsCount; ++i) {
-                this->rectangleMatrix->Set(i, 0);
+                this->rectangleMatrix->Set(i, item);
             }
             this->rectangleMatrix->SetSize(linesCount * columnsCount);
         }

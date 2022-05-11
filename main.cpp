@@ -10,6 +10,7 @@
 #include <iomanip>
 #include "RectangleMatrix.hpp"
 #include "TriangleMatrix.hpp"
+#include "ComplexNumbers.hpp"
 
 int main() {
 //    int n;
@@ -25,7 +26,8 @@ int main() {
     int  lines, columns;
     std :: cin >> lines;
     std :: cin >> columns;
-    auto* items = new double [lines * columns];
+    auto* items = new ComplexNumber<double> [lines * columns];
+//    (ComplexNumber<double>*)malloc(sizeof(ComplexNumber<double>) * lines * columns)
     for (int i = 0; i < lines * columns; ++i) {
         std :: cout << "items[" << i << "] = ";
         std :: cin >> items[i];
@@ -33,7 +35,7 @@ int main() {
     RectangleMatrix rectangleMatrix(items, lines, columns);
     for (int i = 0; i < rectangleMatrix.GetLinesCount(); ++i) {
         for (int j = 0; j < rectangleMatrix.GetColumnsCount(); ++j) {
-            std :: cout << std :: fixed << std :: setprecision(3) << rectangleMatrix.Get(i + 1, j + 1) << " ";
+            std :: cout << std :: fixed << std :: setprecision(3) << rectangleMatrix.Get(i + 1, j + 1) << "  ";
         }
         std :: cout << "\n";
     }
@@ -43,12 +45,12 @@ int main() {
         std :: cout << "items[" << i << "] = ";
         std :: cin >> items[i];
     }
-    std :: cout << "Euclidean norm:\n" << rectangleMatrix.EuclideanNorm() << "\n";
-    RectangleMatrix<double> newRectangleMatrix(items, lines, columns);
+//    std :: cout << "Euclidean norm:\n" << rectangleMatrix.EuclideanNorm() << "\n";
+    RectangleMatrix newRectangleMatrix(items, lines, columns);
     rectangleMatrix = rectangleMatrix * newRectangleMatrix;
     for (int i = 0; i < rectangleMatrix.GetLinesCount(); ++i) {
         for (int j = 0; j < rectangleMatrix.GetColumnsCount(); ++j) {
-            std :: cout << std :: fixed << std :: setprecision(3) << rectangleMatrix.Get(i + 1, j + 1) << " ";
+            std :: cout << std :: fixed << std :: setprecision(3) << rectangleMatrix.Get(i + 1, j + 1) << "  ";
         }
         std :: cout << "\n";
     }
