@@ -5,18 +5,18 @@
 template <class T>
 class RectangleMatrix {
     private:
-        DynamicArray<T>* rectangleMatrix;
+        ArraySequnce<T>* rectangleMatrix;
         int lines = 0;
         int columns = 0;
     public:
         RectangleMatrix() {
-            this->rectangleMatrix = new DynamicArray<T>;
+            this->rectangleMatrix = new ArraySequnce<T>;
         }
 
         RectangleMatrix(T* items, int linesCount, int columnsCount) {
             this->lines = linesCount;
             this->columns = columnsCount;
-            this->rectangleMatrix = new DynamicArray<T>(items, linesCount * columnsCount);
+            this->rectangleMatrix = new ArraySequnce<T>(items, linesCount * columnsCount);
         }
 
         RectangleMatrix(int linesCount, int columnsCount) {
@@ -24,7 +24,8 @@ class RectangleMatrix {
             item = 0;
             this->lines = linesCount;
             this->columns = columnsCount;
-            this->rectangleMatrix = new DynamicArray<T>(linesCount * columnsCount);
+            this->rectangleMatrix = new ArraySequnce<T>(linesCount * columnsCount);
+            this->rectangleMatrix->SetSize(linesCount * columnsCount);
             for (int i = 0; i < linesCount * columnsCount; ++i) {
                 this->rectangleMatrix->Set(i, item);
             }
@@ -32,7 +33,7 @@ class RectangleMatrix {
         }
 
         RectangleMatrix(const RectangleMatrix& matrix) {
-            this->rectangleMatrix = new DynamicArray<T>(*matrix.rectangleMatrix);
+            this->rectangleMatrix = new ArraySequnce<T>(*matrix.rectangleMatrix);
             this->lines = matrix.lines;
             this->columns = matrix.columns;
         }
@@ -137,7 +138,7 @@ class RectangleMatrix {
             delete this->rectangleMatrix;
             this->lines = B.lines;
             this->columns = B.columns;
-            this->rectangleMatrix = new DynamicArray<T>(*B.rectangleMatrix);
+            this->rectangleMatrix = new ArraySequnce<T>(*B.rectangleMatrix);
             for (int i = 0; i < this->lines; ++i) {
                 for (int j = 0; j < this->columns; ++j) {
                     this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
@@ -148,6 +149,7 @@ class RectangleMatrix {
 
         RectangleMatrix operator* (const RectangleMatrix B) {
             RectangleMatrix result(this->lines, B.columns);
+            std :: cout << result.lines * result.columns;
             for (int i = 0; i < result.lines; ++i) {
                 for (int j = 0; j < result.columns; ++j) {
                     for (int l = 0; l < result.columns; ++l) {

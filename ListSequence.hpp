@@ -17,8 +17,8 @@ public:
         this->linkedList = list;
     }
 
-    explicit LinkedListSequence(const LinkedList<T>& list) {
-        auto* newList = new LinkedList<T> (list);
+    explicit LinkedListSequence(const LinkedList<T>& sequence) {
+        auto* newList = new LinkedList<T> (sequence);
         this->linkedList = newList;
     }
 public:

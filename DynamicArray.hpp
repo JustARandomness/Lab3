@@ -2,28 +2,28 @@
 #include <cstring>
 
 template <class T>
-class DynamicArray {
+class ArraySequnce {
 private :
     T* array;
     int size = 0;
     int capacity = 0;
 public:
-    DynamicArray(T* items, int count) {
+    ArraySequnce(T* items, int count) {
         this->array = new T [count];
         this->size = count;
         this->capacity = count;
         memcpy(this->array, items, sizeof(T) * count);
     }
 
-    DynamicArray() = default;
+    ArraySequnce() = default;
 
-    explicit DynamicArray(int count) {
+    explicit ArraySequnce(int count) {
         auto* newArray = new T [count];
         this->array = newArray;
         this->capacity = count;
     }
 
-    DynamicArray(const DynamicArray<T>& dynamicArray) {
+    ArraySequnce(const ArraySequnce<T>& dynamicArray) {
         auto* new_array = new T [dynamicArray.capacity];
         this->array = new_array;
         this->size = dynamicArray.size;

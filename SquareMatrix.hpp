@@ -5,14 +5,14 @@
 template <class T>
 class SquareMatrix {
     private:
-        DynamicArray<T>* sqMatrix;
+        ArraySequnce<T>* sqMatrix;
         int size = 0;
     public:
         SquareMatrix() = default;
 
         explicit SquareMatrix(int count) {
             this->size = count;
-            this->sqMatrix = new DynamicArray<T>(count * count);
+            this->sqMatrix = new ArraySequnce<T>(count * count);
             for (int i = 0; i < count * count; ++i) {
                 this->sqMatrix->Set(i, 0);
             }
@@ -21,7 +21,7 @@ class SquareMatrix {
 
         SquareMatrix(T* items, int count) {
             this->size = count;
-            this->sqMatrix = new DynamicArray<T>(items, count * count);
+            this->sqMatrix = new ArraySequnce<T>(items, count * count);
             for (int i = 0; i < count * count; ++i) {
                 this->sqMatrix->Set(i, items[i]);
             }
@@ -29,7 +29,7 @@ class SquareMatrix {
 
         SquareMatrix(const SquareMatrix& matrix) {
             this->size = matrix.size;
-            this->sqMatrix = new DynamicArray<T>(*matrix.sqMatrix);
+            this->sqMatrix = new ArraySequnce<T>(*matrix.sqMatrix);
         }
     public:
         T Get(int lineSerialNumber, int columnSerialNumber) {
@@ -112,7 +112,7 @@ class SquareMatrix {
                 SquareMatrix<T> resultMatrix(*this);
                 for (int i = 0; i < resultMatrix.size; ++i) {
                     for (int j = 0; j < resultMatrix.size; ++j) {
-                        resultMatrix->Set(i + 1, j + 1, this->Get(i + 1, j + 1) - B.Get(i + 1, j + 1));
+                        resultMatrix.Set(i + 1, j + 1, this->Get(i + 1, j + 1) - B.Get(i + 1, j + 1));
                     }
                 }
                 return resultMatrix;

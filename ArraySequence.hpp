@@ -5,20 +5,20 @@
 template <class T>
 class ArraySequence : public Sequence<T> {
 private:
-    DynamicArray<T>* items;
+    ArraySequnce<T>* items;
 public:
     ArraySequence(T* items, int count) {
-        auto* dynamicArray = new DynamicArray<T> (items, count);
+        auto* dynamicArray = new ArraySequnce<T> (items, count);
         this->items = dynamicArray;
     }
 
     explicit ArraySequence() {
-        auto* newArray = new DynamicArray<T> ();
+        auto* newArray = new ArraySequnce<T> ();
         this->items = newArray;
     }
 
-    explicit ArraySequence(const DynamicArray<T>& ArraySequence) {
-        auto* newArray = new DynamicArray<T> (ArraySequence->items);
+    explicit ArraySequence(const ArraySequnce<T>& sequence) {
+        auto* newArray = new ArraySequnce<T> (sequence->items);
         this->items = newArray;
     }
 public:
@@ -39,7 +39,7 @@ public:
         if (endIndex >= startIndex && endIndex >= 0 && endIndex < size && startIndex >= 0 && startIndex < size) {
             auto *newSequence = new ArraySequence();
             int subArraySize = endIndex - startIndex + 1;
-            auto *subArray = new DynamicArray<T>(endIndex - startIndex + 1);
+            auto *subArray = new ArraySequnce<T>(endIndex - startIndex + 1);
             for (int i = 0; i < subArraySize; ++i) {
                 subArray->Set(i, this->items->Get(startIndex + i));
             }
@@ -68,7 +68,7 @@ public:
             return;
         }
 
-        auto* newDynamicArray = new DynamicArray<T> (this->items->GetSize() - 1);
+        auto* newDynamicArray = new ArraySequnce<T> (this->items->GetSize() - 1);
 
         for (int i = 0; i < index; ++i) {
             newDynamicArray->Set(i, this->items->Get(i));
@@ -116,7 +116,7 @@ public:
 
     Sequence<T>* Concat(Sequence<T>* list) override {
         auto* newArraySequence = new ArraySequence;
-        newArraySequence->items = new DynamicArray<T> (this->items->GetSize() + list->GetLength());
+        newArraySequence->items = new ArraySequnce<T> (this->items->GetSize() + list->GetLength());
         for (int i = 0; i < this->items->GetSize(); ++i) {
             newArraySequence->items->Set(i, this->items->Get(i));
             newArraySequence->items->SetSize(newArraySequence->items->GetSize() + 1);

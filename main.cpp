@@ -26,7 +26,7 @@ int main() {
     int  lines, columns;
     std :: cin >> lines;
     std :: cin >> columns;
-    auto* items = new ComplexNumber<double> [lines * columns];
+    auto* items = new double [lines * columns];
 //    (ComplexNumber<double>*)malloc(sizeof(ComplexNumber<double>) * lines * columns)
     for (int i = 0; i < lines * columns; ++i) {
         std :: cout << "items[" << i << "] = ";
