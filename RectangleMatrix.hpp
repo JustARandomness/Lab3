@@ -149,11 +149,11 @@ class RectangleMatrix {
 
         RectangleMatrix operator* (const RectangleMatrix B) {
             RectangleMatrix result(this->lines, B.columns);
-            std :: cout << result.lines * result.columns;
+//            std :: cout << result.lines * result.columns;
             for (int i = 0; i < result.lines; ++i) {
                 for (int j = 0; j < result.columns; ++j) {
                     for (int l = 0; l < result.columns; ++l) {
-                        result.Set(i + 1, j + 1, result.Get(i + 1, j + 1) + (B.Get(l + 1, j + 1) * this->Get(i + 1, l + 1)));
+                        result.Set(i + 1, j + 1, result.Get(i + 1, j + 1) + (B.Get(i + 1, l + 1) * this->Get(l + 1, j + 1)));
                     }
                 }
             }
