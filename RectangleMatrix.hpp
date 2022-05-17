@@ -4,7 +4,7 @@
 
 template <class T>
 class RectangleMatrix {
-    private:
+    protected:
         ArraySequnce<T>* rectangleMatrix;
         int lines = 0;
         int columns = 0;
@@ -51,8 +51,19 @@ class RectangleMatrix {
             return this->lines;
         }
 
+        T* GetArrayCopy() const{
+            T* items = new T [this->rectangleMatrix->GetSize()];
+            for (int i = 0; i < this->rectangleMatrix->GetSize(); ++i) {
+                items[i] = this->rectangleMatrix->Get(i);
+            }
+            return items;
+        }
+
         RectangleMatrix GetLine(int lineSerialNumber) {
             T* items = new T [this->columns];
+            for (int i = 0; i < this->columns; ++i) {
+                items[i] = this->Get(lineSerialNumber, i + 1);
+            }
             RectangleMatrix newRectangleMatrix(items, 1, this->columns);
             delete[] items;
             return newRectangleMatrix;
@@ -60,6 +71,9 @@ class RectangleMatrix {
 
         RectangleMatrix GetColumn(int columnSerialNumber) {
             T* items = new T [this->lines];
+            for (int i = 0; i < this->lines; ++i) {
+                items[i] = this->Get(i + 1, columnSerialNumber);
+            }
             RectangleMatrix newRectangleMatrix(items, this->lines, 1);
             delete[] items;
             return newRectangleMatrix;
@@ -113,6 +127,15 @@ class RectangleMatrix {
             }
         }
 
+        bool isSquareMatrix() {
+            if (this->lines == this-> columns) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
     public:
         RectangleMatrix operator+ (const RectangleMatrix B) {
             RectangleMatrix result(*this);
@@ -134,7 +157,7 @@ class RectangleMatrix {
             return result;
         }
 
-        RectangleMatrix& operator= (const RectangleMatrix B) {
+        virtual RectangleMatrix& operator= (const RectangleMatrix B) {
             delete this->rectangleMatrix;
             this->lines = B.lines;
             this->columns = B.columns;
@@ -148,16 +171,24 @@ class RectangleMatrix {
         }
 
         RectangleMatrix operator* (const RectangleMatrix B) {
-            RectangleMatrix result(this->lines, B.columns);
-//            std :: cout << result.lines * result.columns;
-            for (int i = 0; i < result.lines; ++i) {
-                for (int j = 0; j < result.columns; ++j) {
-                    for (int l = 0; l < result.columns; ++l) {
-                        result.Set(i + 1, j + 1, result.Get(i + 1, j + 1) + (B.Get(i + 1, l + 1) * this->Get(l + 1, j + 1)));
+            if (this->columns == B.lines) {
+                RectangleMatrix result(this->lines, B.columns);
+                for (int i = 0; i < result.lines; ++i) {
+                    for (int j = 0; j < result.columns; ++j) {
+                        for (int l = 0; l < this->columns; ++l) {
+                            result.Set(i + 1, j + 1,
+                                       result.Get(i + 1, j + 1) + (B.Get(l + 1, j + 1) * this->Get(i + 1, l + 1)));
+                        }
                     }
                 }
+                return result;
             }
-            return result;
+            else {
+                ErrorInfo errorInfo;
+                errorInfo.SetErrorCode(DifferentSizedMatricesCode);
+                errorInfo.CopyErrorMsg(DifferentSizedMatricesMsg);
+                throw errorInfo;
+            }
         }
 
         RectangleMatrix operator* (T item) {
@@ -168,5 +199,15 @@ class RectangleMatrix {
                 }
             }
             return result;
+        }
+
+        friend std :: ostream& operator<< (std :: ostream& os, RectangleMatrix rectangleMatrix1) {
+            for (int i = 0; i < rectangleMatrix1.lines; ++i) {
+                for (int j = 0; j < rectangleMatrix1.columns; ++j) {
+                    std :: cout << std :: setprecision(3) << rectangleMatrix1.Get(i + 1, j + 1) << " ";
+                }
+                std :: cout << "\n";
+            }
+            return os;
         }
 };

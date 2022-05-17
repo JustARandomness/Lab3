@@ -6,6 +6,7 @@ int NoListCreatedCode = 1;
 int NoArrayCreatedCode = 2;
 int IndexOutOfRangeCode = 3;
 int DifferentSizedMatricesCode = 4;
+int NotSquareMatrixCode = 5;
 
 //enum errorsB{
 //    NoError,
@@ -17,6 +18,7 @@ const char* NoListCreatedMsg = "No linked list created";
 const char* NoArrayCreatedMsg = "No array created";
 const char* IndexOutOfRangeMsg = "Index out of range";
 const char* DifferentSizedMatricesMsg = "Matrices have different size";
+const char* NotSquareMatrixMsg = "This is not square matrix";
 
 class ErrorInfo {
 private:

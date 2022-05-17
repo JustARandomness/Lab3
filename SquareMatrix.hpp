@@ -3,97 +3,46 @@
 #include <cmath>
 
 template <class T>
-class SquareMatrix {
-    private:
-        ArraySequnce<T>* sqMatrix;
-        int size = 0;
+class SquareMatrix : public RectangleMatrix<T>{
     public:
         SquareMatrix() = default;
 
         explicit SquareMatrix(int count) {
-            this->size = count;
-            this->sqMatrix = new ArraySequnce<T>(count * count);
+            T item;
+            item = 0;
+            this->lines = count;
+            this->columns = count;
+            this->rectangleMatrix = new ArraySequnce<T>(count * count);
             for (int i = 0; i < count * count; ++i) {
-                this->sqMatrix->Set(i, 0);
+                this->rectangleMatrix->Set(i, item);
             }
-            this->sqMatrix->SetSize(4);
+            this->rectangleMatrix->SetSize(4);
         }
 
         SquareMatrix(T* items, int count) {
-            this->size = count;
-            this->sqMatrix = new ArraySequnce<T>(items, count * count);
+            this->lines = count;
+            this->columns = count;;
+            this->rectangleMatrix = new ArraySequnce<T>(items, count * count);
             for (int i = 0; i < count * count; ++i) {
-                this->sqMatrix->Set(i, items[i]);
+                this->rectangleMatrix->Set(i, items[i]);
             }
         }
 
         SquareMatrix(const SquareMatrix& matrix) {
-            this->size = matrix.size;
-            this->sqMatrix = new ArraySequnce<T>(*matrix.sqMatrix);
+            this->lines = matrix.lines;
+            this->columns = matrix.columns;
+            this->rectangleMatrix = new ArraySequnce<T>(*matrix.rectangleMatrix);
         }
     public:
-        T Get(int lineSerialNumber, int columnSerialNumber) {
-            return this->sqMatrix->Get((lineSerialNumber - 1) * this->size + columnSerialNumber - 1);
-        }
-
         int GetSize() {
-            return this->size;
-        }
-
-    public:
-        void Set(int lineSerialNumber, int columnSerialNumber, T item) {
-            this->sqMatrix->Set((lineSerialNumber - 1) * this->size + columnSerialNumber - 1, item);
-        }
-
-        double EuclideanNorm() {
-            double sum = 0;
-            double temp = 0;
-            for (int i = 0; i < this->size; ++i) {
-                for (int j = 0; j < this->size; ++j) {
-                    temp = this->Get(i + 1, j + 1);
-                    pow(temp, 2);
-                    sum += temp;
-                }
-            }
-            sum = pow(sum, 0.5);
-            return sum;
-        }
-
-        void MultiplyLineByNumber(int lineSerialNumber, T number) {
-            for (int j = 0; j < this->size; ++j) {
-                this->Set(lineSerialNumber, j + 1, this->Get(lineSerialNumber, j + 1) * number);
-            }
-        }
-
-        void MultiplyColumnByNumber(int columnSerialNumber, T number) {
-            for (int i = 0; i < this->size; ++i) {
-                this->Set(i + 1, columnSerialNumber, this->Get(i + 1, columnSerialNumber) * number);
-            }
-        }
-
-        void SwapColumns(int firstColumnSerialNumber, int secondColumnSerialNumber) {
-            T temp;
-            for (int i = 0; i < this->size; ++i) {
-                temp = this->Get(i + 1, firstColumnSerialNumber);
-                this->Set(i + 1, firstColumnSerialNumber, this->Get(i + 1, secondColumnSerialNumber));
-                this->Set(i + 1, firstColumnSerialNumber, temp);
-            }
-        }
-
-        void SwapLines(int firstLineSerialNumber, int secondLineSerialNumber) {
-            T temp;
-            for (int j = 0; j < this->size; ++j) {
-                temp = this->Get(firstLineSerialNumber, j + 1);
-                this->Set(firstLineSerialNumber, j + 1, this->Get(secondLineSerialNumber, j + 1));
-                this->Set(secondLineSerialNumber, j + 1, temp);
-            }
+            return this->lines;
         }
     public:
         SquareMatrix<T> operator+ (SquareMatrix<T> B) {
-            if (this->size == B.size) {
+            if (this->lines == B.lines && this->columns == B.columns) {
                 SquareMatrix<T> resultMatrix(*this);
-                for (int i = 0; i < resultMatrix.size; ++i) {
-                    for (int j = 0; j < resultMatrix.size; ++j) {
+                for (int i = 0; i < resultMatrix.lines; ++i) {
+                    for (int j = 0; j < resultMatrix.columns; ++j) {
                         resultMatrix.Set(i + 1, j + 1, this->Get(i + 1, j + 1) + B.Get(i + 1, j + 1));
                     }
                 }
@@ -108,10 +57,10 @@ class SquareMatrix {
         };
 
         SquareMatrix<T> operator- (const SquareMatrix<T> B) {
-            if (this->size == B.size) {
+            if (this->lines == B.lines && this->columns == B.columns) {
                 SquareMatrix<T> resultMatrix(*this);
-                for (int i = 0; i < resultMatrix.size; ++i) {
-                    for (int j = 0; j < resultMatrix.size; ++j) {
+                for (int i = 0; i < resultMatrix.lines; ++i) {
+                    for (int j = 0; j < resultMatrix.columns; ++j) {
                         resultMatrix.Set(i + 1, j + 1, this->Get(i + 1, j + 1) - B.Get(i + 1, j + 1));
                     }
                 }
@@ -126,11 +75,11 @@ class SquareMatrix {
         };
 
         SquareMatrix<T> operator* (SquareMatrix<T> B) {
-            if (this->size == B.size) {
-                SquareMatrix<T> resultMatrix(this->size);
-                for (int i = 0; i < resultMatrix.size; ++i) {
-                    for (int j = 0; j < resultMatrix.size; ++j) {
-                        for (int l = 0; l < resultMatrix.size; ++l) {
+            if (this->lines == B.lines && this->columns == B.columns) {
+                SquareMatrix<T> resultMatrix(this->lines);
+                for (int i = 0; i < resultMatrix.lines; ++i) {
+                    for (int j = 0; j < resultMatrix.columns; ++j) {
+                        for (int l = 0; l < this->columns; ++l) {
                             resultMatrix.Set(i + 1, j + 1, resultMatrix.Get(i + 1, j + 1) + (B.Get(l + 1, j + 1) * this->Get(i + 1, l + 1)));
                         }
                     }
@@ -144,23 +93,60 @@ class SquareMatrix {
                 throw errorInfo;
             }
         };
-        SquareMatrix<T> operator* (T item) {
-            SquareMatrix<T> resultMatrix(*this);
-            for (int i = 0; i < resultMatrix.size; ++i) {
-                for (int j = 0; j < resultMatrix.size; ++j) {
-                    resultMatrix.Set(i + 1, j + 1, resultMatrix.Get(i + 1, j + 1) * item);
-                }
-            }
-            return resultMatrix;
-        };
 
         SquareMatrix<T>& operator= (SquareMatrix<T> B) {
-            for (int i = 0; i < this->size; ++i) {
-                for (int j = 0; j < this->size; ++j) {
-                    this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
+            if (this->lines == B.lines) {
+                for (int i = 0; i < this->lines; ++i) {
+                    for (int j = 0; j < this->columns; ++j) {
+                        this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
+                    }
                 }
+            }
+            else {
+                delete this->rectangleMatrix;
+                this->rectangleMatrix = new ArraySequnce<T>(*B.rectangleMatrix);
+                this->lines = B.lines;
+                this->columns = B.columns;
             }
             return *this;
         };
 
+    SquareMatrix<T>& operator= (RectangleMatrix<T> B) {
+        if (B.isSquareMatrix() && this->lines == B.GetLinesCount()) {
+            for (int i = 0; i < this->lines; ++i) {
+                for (int j = 0; j < this->columns; ++j) {
+                    this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
+                }
+            }
+            return *this;
+        }
+        else if (!B.isSquareMatrix()) {
+            ErrorInfo errorInfo;
+            errorInfo.SetErrorCode(NotSquareMatrixCode);
+            errorInfo.CopyErrorMsg(NotSquareMatrixMsg);
+            throw errorInfo;
+        }
+        else if (B.isSquareMatrix() && this->lines != B.GetLinesCount()) {
+            delete this->rectangleMatrix;
+            this->rectangleMatrix = new ArraySequnce<T>(B.GetArrayCopy(), B.GetLinesCount() * B.GetColumnsCount());
+            this->lines = B.GetLinesCount();
+            this->columns = B.GetColumnsCount();
+            for (int i = 0; i < this->lines; ++i) {
+                for (int j = 0; j < this->columns; ++j) {
+                    this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
+                }
+            }
+            return *this;
+        }
+    };
+
+        friend std :: ostream& operator<< (std :: ostream& os, SquareMatrix squareMatrix) {
+            for (int i = 0; i < squareMatrix.lines; ++i) {
+                for (int j = 0; j < squareMatrix.columns; ++j) {
+                    std :: cout << std :: setprecision(3) << squareMatrix.Get(i + 1, j + 1) << " ";
+                }
+                std :: cout << "\n";
+            }
+            return os;
+        }
 };

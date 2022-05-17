@@ -6,9 +6,10 @@
 #include "Test.hpp"
 #include "MapWhereReduce.hpp"
 #include "print.hpp"
-#include "SquareMatrix.hpp"
 #include <iomanip>
+#include "Sum.hpp"
 #include "RectangleMatrix.hpp"
+#include "SquareMatrix.hpp"
 #include "TriangleMatrix.hpp"
 #include "ComplexNumbers.hpp"
 
@@ -32,27 +33,11 @@ int main() {
         std :: cout << "items[" << i << "] = ";
         std :: cin >> items[i];
     }
-    RectangleMatrix rectangleMatrix(items, lines, columns);
-    for (int i = 0; i < rectangleMatrix.GetLinesCount(); ++i) {
-        for (int j = 0; j < rectangleMatrix.GetColumnsCount(); ++j) {
-            std :: cout << std :: fixed << std :: setprecision(3) << rectangleMatrix.Get(i + 1, j + 1) << "  ";
-        }
-        std :: cout << "\n";
-    }
-    std :: cin >> lines;
-    std :: cin >> columns;
-    for (int i = 0; i < lines * columns; ++i) {
-        std :: cout << "items[" << i << "] = ";
-        std :: cin >> items[i];
-    }
-//    std :: cout << "Euclidean norm:\n" << rectangleMatrix.EuclideanNorm() << "\n";
-    RectangleMatrix newRectangleMatrix(items, lines, columns);
-    rectangleMatrix = rectangleMatrix * newRectangleMatrix;
-    for (int i = 0; i < rectangleMatrix.GetLinesCount(); ++i) {
-        for (int j = 0; j < rectangleMatrix.GetColumnsCount(); ++j) {
-            std :: cout << std :: fixed << std :: setprecision(3) << rectangleMatrix.Get(i + 1, j + 1) << "  ";
-        }
-        std :: cout << "\n";
-    }
+    SquareMatrix<double> squareMatrix(items, lines);
+    SquareMatrix<double> newSquareMatrix(items, lines);
+    squareMatrix = squareMatrix + newSquareMatrix;
+    std :: cout << squareMatrix.GetLine(2);
+    squareMatrix = (squareMatrix.GetLine(2)) * (squareMatrix.GetColumn(2));
+    std :: cout << squareMatrix;
     return 0;
 }
