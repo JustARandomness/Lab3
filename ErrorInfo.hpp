@@ -7,6 +7,7 @@ int NoArrayCreatedCode = 2;
 int IndexOutOfRangeCode = 3;
 int DifferentSizedMatricesCode = 4;
 int NotSquareMatrixCode = 5;
+int ChangingTriangleMatrixCode = 6;
 
 //enum errorsB{
 //    NoError,
@@ -19,6 +20,7 @@ const char* NoArrayCreatedMsg = "No array created";
 const char* IndexOutOfRangeMsg = "Index out of range";
 const char* DifferentSizedMatricesMsg = "Matrices have different size";
 const char* NotSquareMatrixMsg = "This is not square matrix";
+const char* ChangingTriangleMatrixMsg = "This won't be a triangle matrix";
 
 class ErrorInfo {
 private:

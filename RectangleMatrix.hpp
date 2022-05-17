@@ -5,18 +5,18 @@
 template <class T>
 class RectangleMatrix {
     protected:
-        ArraySequnce<T>* rectangleMatrix;
-        int lines = 0;
-        int columns = 0;
+        DynamicArray<T>* rectangleMatrix;
+        size_t lines = 0;
+        size_t columns = 0;
     public:
         RectangleMatrix() {
-            this->rectangleMatrix = new ArraySequnce<T>;
+            this->rectangleMatrix = new DynamicArray<T>;
         }
 
-        RectangleMatrix(T* items, int linesCount, int columnsCount) {
+        RectangleMatrix(T* items, size_t linesCount, size_t columnsCount) {
             this->lines = linesCount;
             this->columns = columnsCount;
-            this->rectangleMatrix = new ArraySequnce<T>(items, linesCount * columnsCount);
+            this->rectangleMatrix = new DynamicArray<T>(items, linesCount * columnsCount);
         }
 
         RectangleMatrix(int linesCount, int columnsCount) {
@@ -24,7 +24,7 @@ class RectangleMatrix {
             item = 0;
             this->lines = linesCount;
             this->columns = columnsCount;
-            this->rectangleMatrix = new ArraySequnce<T>(linesCount * columnsCount);
+            this->rectangleMatrix = new DynamicArray<T>(linesCount * columnsCount);
             this->rectangleMatrix->SetSize(linesCount * columnsCount);
             for (int i = 0; i < linesCount * columnsCount; ++i) {
                 this->rectangleMatrix->Set(i, item);
@@ -33,7 +33,7 @@ class RectangleMatrix {
         }
 
         RectangleMatrix(const RectangleMatrix& matrix) {
-            this->rectangleMatrix = new ArraySequnce<T>(*matrix.rectangleMatrix);
+            this->rectangleMatrix = new DynamicArray<T>(*matrix.rectangleMatrix);
             this->lines = matrix.lines;
             this->columns = matrix.columns;
         }
@@ -161,7 +161,7 @@ class RectangleMatrix {
             delete this->rectangleMatrix;
             this->lines = B.lines;
             this->columns = B.columns;
-            this->rectangleMatrix = new ArraySequnce<T>(*B.rectangleMatrix);
+            this->rectangleMatrix = new DynamicArray<T>(*B.rectangleMatrix);
             for (int i = 0; i < this->lines; ++i) {
                 for (int j = 0; j < this->columns; ++j) {
                     this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
