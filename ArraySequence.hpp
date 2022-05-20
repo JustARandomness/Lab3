@@ -60,7 +60,7 @@ class ArraySequence : public Sequence<T> {
         }
     public:
         void Delete(int index){
-            if (index < 0 || index >= this->size) {
+            if (index < 0 || index >= this->items->GetSize()) {
                 ErrorInfo errorInfo;
                 errorInfo.SetErrorCode(IndexOutOfRangeCode);
                 errorInfo.CopyErrorMsg(IndexOutOfRangeMsg);
@@ -108,6 +108,7 @@ class ArraySequence : public Sequence<T> {
 
         void InsertAt(T item, int index) override {
             this->items->Resize(this->items->GetSize() + 1);
+            this->items->SetSize(this->items->GetSize() + 1);
             for (int i = this->items->GetSize() - 1; i > index; --i) {
                 this->items->Set(i, this->items->Get(i - 1));
             }

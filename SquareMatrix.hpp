@@ -115,34 +115,34 @@ class SquareMatrix : public RectangleMatrix<T>{
             return *this;
         };
 
-    SquareMatrix<T>& operator= (RectangleMatrix<T> B) {
-        if (B.isSquareMatrix() && this->lines == B.GetLinesCount()) {
-            for (int i = 0; i < this->lines; ++i) {
-                for (int j = 0; j < this->columns; ++j) {
-                    this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
+        SquareMatrix<T>& operator= (RectangleMatrix<T> B) {
+            if (B.isSquareMatrix() && this->lines == B.GetLinesCount()) {
+                for (int i = 0; i < this->lines; ++i) {
+                    for (int j = 0; j < this->columns; ++j) {
+                        this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
+                    }
                 }
+                return *this;
             }
-            return *this;
-        }
-        else if (!B.isSquareMatrix()) {
-            ErrorInfo errorInfo;
-            errorInfo.SetErrorCode(NotSquareMatrixCode);
-            errorInfo.CopyErrorMsg(NotSquareMatrixMsg);
-            throw errorInfo;
-        }
-        else if (B.isSquareMatrix() && this->lines != B.GetLinesCount()) {
-            delete this->rectangleMatrix;
-            this->rectangleMatrix = new DynamicArray<T>(B.GetArrayCopy(), B.GetLinesCount() * B.GetColumnsCount());
-            this->lines = B.GetLinesCount();
-            this->columns = B.GetColumnsCount();
-            for (int i = 0; i < this->lines; ++i) {
-                for (int j = 0; j < this->columns; ++j) {
-                    this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
+            else if (!B.isSquareMatrix()) {
+                ErrorInfo errorInfo;
+                errorInfo.SetErrorCode(NotSquareMatrixCode);
+                errorInfo.CopyErrorMsg(NotSquareMatrixMsg);
+                throw errorInfo;
+            }
+            else if (B.isSquareMatrix() && this->lines != B.GetLinesCount()) {
+                delete this->rectangleMatrix;
+                this->rectangleMatrix = new DynamicArray<T>(B.GetArrayCopy(), B.GetLinesCount() * B.GetColumnsCount());
+                this->lines = B.GetLinesCount();
+                this->columns = B.GetColumnsCount();
+                for (int i = 0; i < this->lines; ++i) {
+                    for (int j = 0; j < this->columns; ++j) {
+                        this->Set(i + 1, j + 1, B.Get(i + 1, j + 1));
+                    }
                 }
+                return *this;
             }
-            return *this;
-        }
-    };
+        };
 
         friend std :: ostream& operator<< (std :: ostream& os, SquareMatrix squareMatrix) {
             for (int i = 0; i < squareMatrix.lines; ++i) {

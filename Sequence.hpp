@@ -13,5 +13,5 @@ public:
     virtual void Prepend(T item) = 0;
     virtual void InsertAt(T item, int index) = 0;
     virtual Sequence<T>* Concat(Sequence<T>* list) = 0;
-    virtual Sequence<T>* Clone() = 0;
+    virtual Sequence<T>* Copy() = 0;
 };

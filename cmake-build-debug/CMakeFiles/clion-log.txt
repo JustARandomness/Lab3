@@ -1,4 +1,4 @@
-C:\Users\futin\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\213.7172.20\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" D:\Coding\CPP\Lab3
+C:\Users\futin\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\213.7172.20\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" D:\Coding\CPP\Lab3(old)
 -- The C compiler identification is GNU 9.2.0
 -- The CXX compiler identification is GNU 9.2.0
 -- Detecting C compiler ABI info
@@ -13,4 +13,4 @@ C:\Users\futin\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\213.7172.20\bin\c
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: D:/Coding/CPP/Lab3/cmake-build-debug
+-- Build files have been written to: D:/Coding/CPP/Lab3(old)/cmake-build-debug
